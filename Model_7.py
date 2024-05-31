@@ -1,8 +1,8 @@
 import os
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Input, LSTM, Dense
+from tensorflow.keras.models import Model  # type: ignore
+from tensorflow.keras.layers import Input, LSTM, Dense  # type: ignore
 from data import data
 from generate_react_native_component import generate_react_native_component
 
