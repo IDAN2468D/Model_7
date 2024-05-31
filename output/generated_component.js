@@ -10,9 +10,7 @@ const GeneratedComponent = () => {
   );
 }
 
-const styles = StyleSheet.create({
-  "container": { 'flex': 1, 'justifyContent': 'center', 'alignItems': 'center' },
-  "text": { 'color': '#ffffff' }
-});
+const styles = StyleSheet.create({"container": {'flex': 1, 'justifyContent': 'center', 'alignItems': 'center'},
+"text": {'color': '#ffffff'}});
 
 export default GeneratedComponent;

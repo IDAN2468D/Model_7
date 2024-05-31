@@ -149,5 +149,16 @@ with open(js_file_path, "w") as js_file:
 with open(react_native_file_path, "w") as rn_file:
     rn_file.write(react_native_code)
 
+encoder_lstm_params = (num_encoder_tokens * latent_dim * 4) + (latent_dim * 2)
+decoder_lstm_params = (num_decoder_tokens * latent_dim * 4) + (latent_dim * 2)
+dense_params = num_decoder_tokens * latent_dim
+total_params = encoder_lstm_params + decoder_lstm_params + dense_params
+
+# הדפסת תוצאות החישובים
+print("Number of parameters in encoder LSTM:", encoder_lstm_params)
+print("Number of parameters in decoder LSTM:", decoder_lstm_params)
+print("Number of parameters in final Dense layer:", dense_params)
+print("Total number of parameters in the model:", total_params)
+
 print("JavaScript code saved to:", js_file_path)
 print("React Native component saved to:", react_native_file_path)
