@@ -1,9 +1,9 @@
 import os
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.models import Model  # type: ignore
-from tensorflow.keras.layers import Input, LSTM, Dense  # type: ignore
-from data import data
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input, LSTM, Dense
+from data import data  # Ensure this file has the proper dataset
 from generate_react_native_component import generate_react_native_component
 
 # Data Preparation
@@ -116,17 +116,21 @@ def decode_sequence(input_seq):
     return decoded_sentence.strip()
 
 
-test_input_text = "create a function to add two numbers"
-test_input_data = np.zeros(
-    (1, max_encoder_seq_length, num_encoder_tokens), dtype="float32"
-)
-for t, char in enumerate(test_input_text):
-    test_input_data[0, t, input_token_index[char]] = 1.0
+def generate_react_native_code_from_description(description):
+    input_data = np.zeros(
+        (1, max_encoder_seq_length, num_encoder_tokens), dtype="float32"
+    )
+    for t, char in enumerate(description):
+        if char in input_token_index:
+            input_data[0, t, input_token_index[char]] = 1.0
 
-js_code = decode_sequence(test_input_data)
-print(
-    "Generated JavaScript code:\n", js_code
-)  # Add this line to print the JavaScript code
+    return decode_sequence(input_data)
+
+
+test_input_text = "create a function to add two numbers"
+js_code = generate_react_native_code_from_description(test_input_text)
+print("Generated JavaScript code:\n", js_code)
+
 react_native_code = generate_react_native_component()
 print("Generated React Native component:\n", react_native_code)
 
@@ -154,7 +158,7 @@ decoder_lstm_params = (num_decoder_tokens * latent_dim * 4) + (latent_dim * 2)
 dense_params = num_decoder_tokens * latent_dim
 total_params = encoder_lstm_params + decoder_lstm_params + dense_params
 
-# הדפסת תוצאות החישובים
+# Print results
 print("Number of parameters in encoder LSTM:", encoder_lstm_params)
 print("Number of parameters in decoder LSTM:", decoder_lstm_params)
 print("Number of parameters in final Dense layer:", dense_params)
